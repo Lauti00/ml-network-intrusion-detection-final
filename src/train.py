@@ -59,6 +59,14 @@ def load_xy(task: str):
         y = pd.Series(encoder.transform(y), index=y.index, name=y.name)
     return X, y, encoder
 
+def build_groups(X: pd.DataFrame) -> pd.Series:
+    """Asigna el mismo identificador a filas con características idénticas."""
+    return X.groupby(
+        list(X.columns),
+        sort=False,
+        dropna=False
+    ).ngroup()
+
 
 def cross_validate(task: str, model: str):
     """Corre la CV de 5 folds. Devuelve las métricas de cada fold y los scores out-of-fold."""
@@ -66,7 +74,7 @@ def cross_validate(task: str, model: str):
 
     # Filas con exactamente la misma X van al mismo grupo, y cada grupo cae entero en un solo fold.
     # Así ninguna fila repetida está a la vez en entrenamiento y en validación (recomendación de la cátedra).
-    groups = X.groupby(list(X.columns), sort=False, dropna=False).ngroup()
+    groups = build_groups(X)
     sgkf = StratifiedGroupKFold(n_splits=N_FOLDS, shuffle=True, random_state=SEED)
 
 
