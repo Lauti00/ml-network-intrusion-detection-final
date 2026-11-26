@@ -1,3 +1,4 @@
+
 [project]
 name = "nids-unsw-nb15"
 version = "1.0.0"
@@ -9,6 +10,7 @@ authors = [
     { name = "Maximo Agustin Rodeyro" },
     { name = "Lautaro Niccolini" },
 ]
+
 # Versiones exactas para que los resultados se puedan reproducir.
 # requirements.txt tiene además todas las dependencias transitivas fijadas.
 dependencies = [
@@ -20,6 +22,11 @@ dependencies = [
     "joblib==1.6.0",
     "matplotlib==3.11.2",
     "ipykernel==7.4.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==9.2.0",
 ]
 
 [build-system]
